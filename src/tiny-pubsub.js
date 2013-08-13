@@ -18,11 +18,9 @@
  * with the interface, just the implementation.
  */
 
-(function($) {
-  "use strict";
+(function($, o) {
 
-  // Create a "dummy" jQuery object on which to bind, `off` and `trigger` event handlers.
-  var o = $({});
+  o = $({});
 
   $.subscribe = function() {
     var fn = arguments[1];
@@ -39,13 +37,8 @@
     o.on.apply(o, arguments);
   };
 
-  // Unsubscribe from a topic. Works exactly like unbind.
-  $.off = function() {
-    o.off.apply( o, arguments );
-  };
+  $.each({ 'unsubscribe': 'off', 'publish': 'trigger' }, function(v, k){
+    $[v] = $.proxy(o[k], o);
+  });
 
-  // Publish a topic. Works exactly like trigger.
-  $.emit = function() {
-    o.trigger.apply( o, arguments );
-  };
 }(jQuery));
