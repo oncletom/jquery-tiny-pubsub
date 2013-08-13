@@ -6,9 +6,9 @@
  * Licensed under the MIT license.
  */
 
-(function($) {
+(function($, o) {
 
-  var o = $({});
+  o = $({});
 
   $.subscribe = function() {
     var fn = arguments[1];
@@ -23,12 +23,8 @@
     o.on.apply(o, arguments);
   };
 
-  $.unsubscribe = function() {
-    o.off.apply(o, arguments);
-  };
-
-  $.publish = function() {
-    o.trigger.apply(o, arguments);
-  };
+  $.each({ 'unsubscribe': 'off', 'publish': 'trigger' }, function(v, k){
+    $[v] = $.proxy(o[k], o);
+  });
 
 }(jQuery));
