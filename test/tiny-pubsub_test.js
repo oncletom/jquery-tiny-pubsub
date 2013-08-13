@@ -25,7 +25,7 @@
       var result = this.result = [];
       this.createHandler = function(id) {
         return function() {
-          result.push([id].concat([].slice.call(arguments, 1)));
+          result.push([id].concat([].slice.call(arguments)));
         };
       };
     }

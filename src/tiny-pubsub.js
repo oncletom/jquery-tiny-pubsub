@@ -11,6 +11,15 @@
   var o = $({});
 
   $.subscribe = function() {
+    var fn = arguments[1];
+
+    function wrapper() {
+      return fn.apply(this, Array.prototype.slice.call(arguments, 1));
+    }
+
+    wrapper.guid = fn.guid = fn.guid || ($.guid ? $.guid++ : $.event.guid++);
+    arguments[1] = wrapper;
+
     o.on.apply(o, arguments);
   };
 
