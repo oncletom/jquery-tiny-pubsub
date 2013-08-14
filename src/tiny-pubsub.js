@@ -10,7 +10,7 @@
 
   o = $({});
 
-  $.subscribe = function() {
+  $.on = function() {
     var fn = arguments[1];
 
     function wrapper() {
@@ -23,7 +23,7 @@
     o.on.apply(o, arguments);
   };
 
-  $.each({ 'unsubscribe': 'off', 'publish': 'trigger' }, function(v, k){
+  $.each({ 'off': 'off', 'emit': 'trigger' }, function(v, k){
     $[v] = $.proxy(o[k], o);
   });
 
