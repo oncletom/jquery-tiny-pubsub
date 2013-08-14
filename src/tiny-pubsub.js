@@ -7,20 +7,23 @@
  */
 
 (function($, o) {
+  "use strict";
 
   o = $({});
 
   $.on = function() {
-    var fn = arguments[1];
+    var context = this;
+    var args = arguments;
+    var fn = args[1];
 
     function wrapper() {
-      return fn.apply(this, Array.prototype.slice.call(arguments, 1));
+      return fn.apply(context, Array.prototype.slice.call(arguments, 1));
     }
 
     wrapper.guid = fn.guid = fn.guid || ($.guid ? $.guid++ : $.event.guid++);
-    arguments[1] = wrapper;
+    args[1] = wrapper;
 
-    o.on.apply(o, arguments);
+    o.on.apply(o, args);
   };
 
   $.each({ 'off': 'off', 'emit': 'trigger' }, function(v, k){
