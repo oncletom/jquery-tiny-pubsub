@@ -79,4 +79,15 @@
     ], 'unsubscribing should work.');
   });
 
+  test('unsubscribe all', function() {
+    $.on('unsubscribe-all', this.createHandler('unsubscribe1'));
+    $.on('unsubscribe-all.xyz', this.createHandler('unsubscribe2'));
+    $.on('unsubscribe-all.abc', this.createHandler('unsubscribe3'));
+
+    $.off();
+
+    $.emit('unsubscribe-all', [8, 9]);
+    deepEqual(this.result, [], 'unsubscribing should work.');
+  });
+
 }(jQuery));
